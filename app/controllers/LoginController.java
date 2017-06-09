@@ -1,8 +1,10 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.UserDB;
 import models.UserOnline;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.login;
@@ -21,13 +23,18 @@ public class LoginController extends Controller {
         String login = req.get("login").asText();
         String password = req.get("password").asText();
         String token;
+        ObjectNode result;
 
         if(!UserDB.isUser(login)) {
-            return badRequest("Не найдено пользователя с таким логином!");
+            result = Json.newObject();
+            result.put("error", "Не найден пользователя с таким логином!");
+            return badRequest(result);
         }
         token = UserOnline.signIn(login, password);
         if(token == null) {
-            return badRequest("Неверный пароль!");
+            result = Json.newObject();
+            result.put("error", "Неверный пароль!");
+            return badRequest(result);
         }
 
         session().clear();
