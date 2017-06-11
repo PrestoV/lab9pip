@@ -1,6 +1,6 @@
 @import views.html.header
 
-@(login : String)
+@(login: String)
 
 <!DOCTYPE html>
 <html>
@@ -11,12 +11,12 @@
         <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/style.css")"/>
     </head>
     <body>
-        @header()
-        <div class="card" style="float: left; width: 65%; margin-left: 17%;">
+        @header(true, login.toUpperCase)
+        <div class="card" style="width: 900px;">
             <canvas id="plot" onclick="" height="440px" width="440px"
             style="margin-top: 20px; margin-bottom: 20px;">
             </canvas>
-            <div style="float: right; margin-top: 20px; margin-right: 20px;">
+            <div style="float: right;">
                 <div id="r_div" class="form-group panel panel-default" v-bind:class="{ 'has-error' : incorrectR }">
                     <div class="panel-heading">
                         <label class="control-label" style="margin: 0px;">Параметр R</label>
@@ -41,7 +41,8 @@
                         </div>
                     </div>
                 </div>
-                <div id="point_div" class="form-group panel panel-default"  v-bind:class="{ 'has-error' : incorrectCoords }">
+                <div id="point_div" class="form-group panel panel-default"
+                v-bind:class="{ 'has-error' : incorrectCoords }">
                     <div class="panel-heading">
                         <label class="control-label" style="margin: 0px;">Проверка точки</label>
                     </div>
@@ -78,7 +79,8 @@
                                     <label class="navbar-brand">Y</label>
                                 </div>
                                 <div class="collapse navbar-collapse" style="float: right; margin-top: 14px;">
-                                    <input v-model.trim="yValue" v-on:blur="isValidY" type="text" maxlength="20" placeholder="-3 ... 3"/>
+                                    <input v-model.trim="yValue" v-on:blur="isValidY" type="text"
+                                    maxlength="20" placeholder="-3 ... 3"/>
                                 </div>
                             </div>
                         </nav>
@@ -91,13 +93,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card" style="float: left; width: 200px; margin-left: 2%">
-            <h4 class="text-center">@login</h4>
-            <button id="unauthorize_button" class="mt_button"
-            style="width: 100%; margin: 0px; background: #3F51B5;" v-on:click="unauthorize">
-                Закрыть сессию
-            </button>
         </div>
         <script src="https://ru.vuejs.org/js/vue.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.0/vue-resource.min.js"></script>

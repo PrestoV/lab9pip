@@ -173,6 +173,7 @@ div.card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     text-align: center;
     transition: 0.3s;
+    padding: 20px;
 }
 
 div.card_body {
@@ -255,4 +256,23 @@ a:link, a:visited {
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     cursor: pointer;
+}
+
+.btn-group .button {
+    background-color: #3F51B5;
+    border: 1px solid #283593;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    float: left;
+}
+.btn-group .button:not(:last-child) {
+    border-right: none;
+}
+.btn-group .button:hover {
+    background-color: #283593;
 }

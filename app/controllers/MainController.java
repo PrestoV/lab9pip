@@ -11,7 +11,7 @@ public class MainController extends Controller {
     @Security.Authenticated(Secured.class)
     public Result index() {
         return ok(main.render(
-                UserOnline.getLogin( session().get("token") ).toUpperCase()
+                UserOnline.getLogin( session().get("token") )
         ));
     }
 }

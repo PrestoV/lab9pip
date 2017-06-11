@@ -1,8 +1,24 @@
+@(isLoggedIn: Boolean, login: String)
+
 <div class="header-area">
-    <h1 align="center">
-        Параметризированная область
-    </h1>
-    <h4 align="center">
-        Постовалов Роман Дмитриевич P3202 №255
-    </h4>
+    <div>
+        <h1 align="center">
+            Параметризированная область
+        </h1>
+        <h4 align="center">
+            Постовалов Роман Дмитриевич P3202 №255
+        </h4>
+    </div>
+    @if(isLoggedIn) {
+        <div style="float: right; margin-top: -30px; position: relative;">
+            <label style="font-size: 14px; padding: 10px;">
+            @login
+            </label>
+            <div class="btn-group">
+                <button id="unauthorize_button" class="button" v-on:click="unauthorize">
+                    Закрыть сессию
+                </button>
+            </div>
+        </div>
+    }
 </div>

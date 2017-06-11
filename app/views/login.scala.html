@@ -9,17 +9,19 @@
         <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/style.css")"/>
     </head>
     <body>
-        @header()
+        @header(false, "")
     <div style="width:30%; padding: 15px;" class="card">
         <h2 class="text-center">Авторизация</h2>
         <form id="login_form" style="margin-top: 30px;" v-on:submit.prevent="submitForm">
             <div class="form-group" v-bind:class="{ 'has-error' : incorrectLogin }">
                 <label for="login" class="control-label">Логин</label>
-                <input v-model.trim="login" v-on:blur="isValidLogin" maxlength="45" class="form-control" name="login" type="text" />
+                <input v-model.trim="login" v-on:blur="isValidLogin" maxlength="45"
+                class="form-control" name="login" type="text" />
             </div>
             <div class="form-group" v-bind:class="{ 'has-error' : incorrectPassword }" style="margin-bottom: 25px;">
                 <label for="password" class="control-label">Пароль</label>
-                <input v-model.trim="password" v-on:blur="isValidPassword" maxlength="45" class="form-control" name="password" type="password" />
+                <input v-model.trim="password" v-on:blur="isValidPassword" maxlength="45"
+                class="form-control" name="password" type="password" />
             </div>
             <div class="alert" v-if="hasWarning || hasError"
             v-bind:class="{ 'alert-warning' : hasWarning, 'alert-danger' : hasError }"
