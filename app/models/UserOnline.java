@@ -1,18 +1,18 @@
 package models;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class UserOnline {
-    private static Set<String> onlineSet= new HashSet<>();
+abstract public class UserOnline {
+    private static Map<String, String> onlineSet = new HashMap<>();
 
     public static String signIn(String login, String password) {
         String token = null;
         if( UserDB.isValid(login, password) ) {
-            token = login + new Date();
-            onlineSet.add(token);
+            token = Encryption.encryptString(login + new Date());
+            onlineSet.put(token, login);
         }
         return token;
     }
@@ -21,7 +21,11 @@ public class UserOnline {
        onlineSet.remove(token);
     }
 
+    public static String getLogin(String token) {
+        return onlineSet.get(token);
+    }
+
     public static boolean isValid(String token) {
-        return token != null && onlineSet.contains(token);
+        return token != null && onlineSet.containsKey(token);
     }
 }

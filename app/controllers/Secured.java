@@ -4,7 +4,7 @@ import models.UserOnline;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
-import views.html.defaultpages.unauthorized;
+import views.html.unauth;
 
 
 public class Secured extends Security.Authenticator {
@@ -17,7 +17,6 @@ public class Secured extends Security.Authenticator {
 
     @Override
     public Result onUnauthorized(Http.Context context) {
-        //TODO: redirect(routes.Application.login());
-        return unauthorized(unauthorized.render());
+        return unauthorized( unauth.render() );
     }
 }

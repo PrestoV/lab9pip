@@ -1,0 +1,18 @@
+@import views.html.defaultpages.unauthorized;
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Недоступная страница</title>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/style.css")"/>
+  </head>
+  <body>
+    @unauthorized()
+    Вы будете перенаправлены на страницу авторизации
+    <script>
+      setTimeout('window.location = "/"', 3000);
+    </script>
+  </body>
+</html>

@@ -25,7 +25,8 @@ new Vue({
                 this.$http({url: '/', method: 'POST',
                     data: {
                         login: this.login,
-                        password: this.password
+                        password: this.password,
+                        action: 'authorize'
                     }
                 }).then(
                     function (response) {
