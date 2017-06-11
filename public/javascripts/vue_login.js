@@ -11,6 +11,7 @@ new Vue({
     },
     methods: {
         isValidLogin: function () {
+            this.login.trim();
             this.incorrectLogin = this.login.length <= 0;
             return !this.incorrectLogin;
         },

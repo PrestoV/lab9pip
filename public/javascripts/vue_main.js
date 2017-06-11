@@ -73,7 +73,20 @@ var pointParam = new Vue({
             this.incorrectCoords = false;
 
             if(x !== null && y !== null && r !== null) {
-                alert("check");
+                this.$http({url: '/addpoint', method: 'GET',
+                    data: {
+                        x: x,
+                        y: y,
+                        r: r
+                    }
+                }).then(
+                    function (response) {
+                        alert(response.data);
+                    },
+                    function (response) {
+                        alert("Произошла ошибка при обработке запроса.");
+                    }
+                );
             } else {
                 this.message = "Укажите корректно параметры:";
                 if(r === null) {
@@ -104,6 +117,7 @@ var pointParam = new Vue({
             if(this.yValue === null) {
                 return false;
             }
+            this.yValue.trim();
             var value = this.trimValue(this.yValue);
             return !isNaN(parseFloat(value))
                 && +value >= -3

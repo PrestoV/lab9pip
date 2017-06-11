@@ -20,7 +20,7 @@
             </div>
             <div class="form-group" v-bind:class="{ 'has-error' : incorrectPassword }" style="margin-bottom: 25px;">
                 <label for="password" class="control-label">Пароль</label>
-                <input v-model.trim="password" v-on:blur="isValidPassword" maxlength="45"
+                <input v-model="password" v-on:blur="isValidPassword" maxlength="45"
                 class="form-control" name="password" type="password" />
             </div>
             <div class="alert" v-if="hasWarning || hasError"

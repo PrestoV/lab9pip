@@ -1,4 +1,6 @@
 GET     /                   controllers.LoginController.index
 POST    /                   controllers.LoginController.postLogin
 GET     /main               controllers.MainController.index
+GET     /addpoint           controllers.MainController.addPoint(x: Double, y: Double, r: Double)
+GET     /getpoints          controllers.MainController.getPoints(r: java.lang.Double ?= null)
 GET     /assets/*file       controllers.Assets.versioned(path="/public", file: Asset)
