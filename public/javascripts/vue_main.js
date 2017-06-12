@@ -29,6 +29,18 @@ var rParam =  new Vue({
             if(this.rElement !== event.currentTarget) {
                 this.rElement = event.currentTarget;
                 this.rElement.style.backgroundColor = 'lightslategray';
+                this.$http({url: '/getpoints', method: 'GET',
+                    data: {
+                        r: this.getR()
+                    }
+                }).then(
+                    function (response) {
+                        coordPlot.drawPlot(response.data);
+                    },
+                    function (response) {
+                        alert("Произошла ошибка при обработке запроса.");
+                    }
+                );
             } else {
                 this.rElement = null;
             }
@@ -81,7 +93,10 @@ var pointParam = new Vue({
                     }
                 }).then(
                     function (response) {
-                        alert(response.data);
+                        coordPlot.drawPlot(response.data);
+                        this.yValue = null;
+                        this.xElement.style.backgroundColor = 'white';
+                        this.xElement = null;
                     },
                     function (response) {
                         alert("Произошла ошибка при обработке запроса.");
@@ -130,18 +145,83 @@ var pointParam = new Vue({
 });
 
 var coordPlot = new Vue({
+    el: '#plot',
     methods: {
-        drawPlot: function () {
-            var canvasContext = document.getElementById("plot").getContext("2d");
+        drawPlot: function (points) {
+            var canvasContext = this.$el.getContext("2d");
             canvasContext.clearRect(0, 0, canvasContext.width, canvasContext.height);
 
             var image = new Image();
             image.src = "/assets/images/area.png";
             image.onload = function () {
                 canvasContext.drawImage(image, 0, 0);
+                if(points === null) {
+                    coordPlot.$http({url: '/getpoints', method: 'GET', data: {}
+                    }).then(
+                        function (response) {
+                            coordPlot.drawPoints(response.data);
+                        },
+                        function (response) {
+                            alert("Произошла ошибка при обработке запроса.");
+                        }
+                    );
+                } else {
+                    coordPlot.drawPoints(points);
+                }
             }
+        },
+        drawPoint: function (point) {
+            var rd = (+point.r) / 154;
+            var canvasRect = this.$el.getBoundingClientRect();
+
+            var xCoord = (point.x / rd) + canvasRect.width / 2;
+            var yCoord = canvasRect.height / 2 - (point.y / rd);
+
+            this.$el.getContext("2d").fillStyle = point.inArea ? "#00FF00" : "#FF0000";
+            this.$el.getContext("2d").fillRect(xCoord, yCoord, 3, 3);
+        },
+        drawPoints: function (jsonPoints) {
+            for (let i in jsonPoints) {
+                this.drawPoint(
+                    { x: jsonPoints[i].x, y: jsonPoints[i].y, r: jsonPoints[i].r, inArea: jsonPoints[i].inArea }
+                );
+            }
+        },
+        plotClick: function (e) {
+            var r = rParam.getR();
+            if(r === null) {
+                pointParam.message = "Укажите корректно параметры: R";
+                pointParam.hasWarning = true;
+                return;
+            }
+            pointParam.message = '';
+            pointParam.hasWarning = false;
+
+            var rd = r / 154;
+            var canvasRect = this.$el.getBoundingClientRect();
+
+            var x = (e.clientX - canvasRect.left - canvasRect.width / 2) * rd;
+            var y = (canvasRect.height / 2 - e.clientY + canvasRect.top) * rd;
+
+            x = x.toFixed(2);
+            y = y.toFixed(2);
+
+            this.$http({url: '/addpoint', method: 'GET',
+                data: {
+                    x: x,
+                    y: y,
+                    r: r
+                }
+            }).then(
+                function (response) {
+                    coordPlot.drawPlot(response.data);
+                },
+                function (response) {
+                    alert("Произошла ошибка при обработке запроса.");
+                }
+            );
         }
     }
 });
 
-window.onload = coordPlot.drawPlot();
+window.onload = coordPlot.drawPlot(null);

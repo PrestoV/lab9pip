@@ -18,11 +18,18 @@ abstract public class ParamArea {
         List<Point> scaledPoints = new ArrayList<>();
         Point scaledPoint;
         for(Point point : points) {
-            scaledPoint = point.clone();
             if(r != null) {
-                scaledPoint.setInArea(
-                        checkPoint(point.getX(), point.getY(), r)
+                scaledPoint = new Point(
+                        point.getX() * point.getR() / r,
+                        point.getY() * point.getR() / r,
+                        point.getR()
                 );
+                scaledPoint.setInArea(
+                        r >= 0 ? checkPoint(point.getX(), point.getY(), r)
+                                : checkPoint(-point.getX(), -point.getY(), -r)
+                );
+            } else {
+                scaledPoint = point.clone();
             }
             scaledPoints.add(scaledPoint);
         }
