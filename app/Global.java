@@ -1,5 +1,3 @@
-import models.UserDB;
-import play.Application;
 import play.GlobalSettings;
 import play.libs.F;
 import play.mvc.Http;
@@ -10,11 +8,6 @@ import static play.mvc.Results.redirect;
 
 
 public class Global extends GlobalSettings {
-    @Override
-    public void onStart(Application app) {
-        UserDB.addUser("presto", "228");
-    }
-
     @Override
     public CompletionStage<play.mvc.Result> onHandlerNotFound(Http.RequestHeader request) {
         return F.Promise.pure(redirect("/"));

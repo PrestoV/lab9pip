@@ -1,20 +1,27 @@
-package models;
+package models.area;
 
-
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract public class ParamArea {
-    private static List<Point> points = new ArrayList<>();
 
-    public static void addPoint(Point point) {
-        point.setInArea(
-                checkPoint(point.getX(), point.getY(), point.getR())
-        );
-        points.add(point);
+public class ParamArea {
+    private final PointRepository pointRepository;
+
+    @Inject
+    public ParamArea(PointRepository pointRepository) {
+        this.pointRepository = pointRepository;
     }
 
-    public static List<Point> getPoints(Double r) {
+    public void addPoint(UserPoint point) {
+        point.setInarea(
+                checkPoint(point.getX(), point.getY(), point.getR())
+        );
+        pointRepository.add(point);
+    }
+
+    public List<Point> getPoints(String owner, Double r) {
+        List<Point> points = pointRepository.list(owner);
         List<Point> scaledPoints = new ArrayList<>();
         Point scaledPoint;
         for(Point point : points) {
@@ -24,7 +31,7 @@ abstract public class ParamArea {
                         point.getY() * point.getR() / r,
                         point.getR()
                 );
-                scaledPoint.setInArea(
+                scaledPoint.setInarea(
                         r >= 0 ? checkPoint(point.getX(), point.getY(), r)
                                 : checkPoint(-point.getX(), -point.getY(), -r)
                 );

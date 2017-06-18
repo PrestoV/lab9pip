@@ -1,11 +1,11 @@
-package models;
+package models.shared;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 
-abstract class Encryption {
-    static String encryptString(String string) {
+abstract public class Encryption {
+    public static String encryptString(String string) {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             messageDigest.reset();

@@ -177,15 +177,16 @@ var coordPlot = new Vue({
             var xCoord = (point.x / rd) + canvasRect.width / 2;
             var yCoord = canvasRect.height / 2 - (point.y / rd);
 
-            this.$el.getContext("2d").fillStyle = point.inArea ? "#00FF00" : "#FF0000";
+            this.$el.getContext("2d").fillStyle = point.inarea ? "#00FF00" : "#FF0000";
             this.$el.getContext("2d").fillRect(xCoord, yCoord, 3, 3);
         },
         drawPoints: function (jsonPoints) {
             for (let i in jsonPoints) {
                 this.drawPoint(
-                    { x: jsonPoints[i].x, y: jsonPoints[i].y, r: jsonPoints[i].r, inArea: jsonPoints[i].inArea }
+                    { x: jsonPoints[i].x, y: jsonPoints[i].y, r: jsonPoints[i].r, inarea: jsonPoints[i].inarea }
                 );
             }
+            resultTable.fillTable();
         },
         plotClick: function (e) {
             var r = rParam.getR();
@@ -215,6 +216,48 @@ var coordPlot = new Vue({
             }).then(
                 function (response) {
                     coordPlot.drawPlot(response.data);
+                },
+                function (response) {
+                    alert(response.data.error);
+                }
+            );
+        }
+    }
+});
+
+var resultTable = new Vue({
+    el: '#result_div',
+    data: {
+        showTable: false
+    },
+    methods: {
+        fillTable: function() {
+            this.showTable = true;
+            this.$http({url: '/getpoints', method: 'GET', data: {}
+            }).then(
+                function (response) {
+                    var table = document.getElementById("result_table_body");
+                    table.innerHTML = "";
+                    for(var i = Object.keys(response.data).length-1; i >= 0; i--) {
+                        var tr = document.createElement('TR');
+
+                        var tdX = document.createElement('TD');
+                        var tdY = document.createElement('TD');
+                        var tdR = document.createElement('TD');
+                        var tdInArea = document.createElement('TD');
+                        tdX.innerHTML = response.data[i].x;
+                        tdY.innerHTML = response.data[i].y;
+                        tdR.innerHTML = response.data[i].r;
+                        tdInArea.innerHTML = response.data[i].inarea ? "да" : "нет";
+
+                        tr.appendChild(tdX);
+                        tr.appendChild(tdY);
+                        tr.appendChild(tdR);
+                        tr.appendChild(tdInArea);
+
+                        table.appendChild(tr);
+                    }
+                    this.showTable = Object.keys(response.data).length !== 0;
                 },
                 function (response) {
                     alert("Произошла ошибка при обработке запроса.");

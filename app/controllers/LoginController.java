@@ -1,17 +1,25 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import models.UserDB;
-import models.UserOnline;
+import models.users.UserOnline;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.login;
 
+import javax.inject.Inject;
+
 
 public class LoginController extends Controller {
+    private final UserOnline userOnline;
+
+    @Inject
+    public LoginController(UserOnline userOnline) {
+        this.userOnline = userOnline;
+    }
+
     public Result index() {
-        return UserOnline.isValid( session().get("token") ) ?
+        return userOnline.isValid( session().get("token") ) ?
                 redirect(
                         routes.MainController.index()
                 )
@@ -28,7 +36,10 @@ public class LoginController extends Controller {
             case "unauthorize":
                 return unauthorize();
             default:
-                return badRequest();
+                return badRequest(
+                        Json.newObject()
+                                .put("error", "Неверное действие!")
+                );
         }
     }
 
@@ -38,17 +49,11 @@ public class LoginController extends Controller {
         String password = req.get("password").asText();
         String token;
 
-        if(!UserDB.isUser(login)) {
-            return badRequest(
-                    Json.newObject()
-                            .put("error", "Не найден пользователя с таким логином!")
-            );
-        }
-        token = UserOnline.signIn(login, password);
+        token = userOnline.signIn(login, password);
         if(token == null) {
             return badRequest(
                     Json.newObject()
-                            .put("error", "Неверный пароль!")
+                            .put("error", "Неверное имя пользователя или пароль!")
             );
         }
 
@@ -59,7 +64,7 @@ public class LoginController extends Controller {
     }
 
     private Result unauthorize() {
-        UserOnline.signOut(
+        userOnline.signOut(
                 session().get("token")
         );
         session().clear();
