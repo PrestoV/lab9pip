@@ -1,25 +1,34 @@
 package controllers;
 
-import models.area.ParamArea;
+import actors.PointActor;
+import actors.PointActorProtocol;
+import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
+import models.area.PointRepository;
 import models.area.UserPoint;
 import models.users.UserOnline;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import scala.compat.java8.FutureConverters;
 import views.html.main;
 
 import javax.inject.Inject;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+
+import static akka.pattern.Patterns.ask;
 
 
 public class MainController extends Controller {
-    private final ParamArea paramArea;
     private final UserOnline userOnline;
+    private final ActorRef pointProducer;
 
     @Inject
-    public MainController(ParamArea paramArea, UserOnline userOnline) {
-        this.paramArea = paramArea;
+    public MainController(UserOnline userOnline, ActorSystem actorSystem, PointRepository pointRepository) {
         this.userOnline = userOnline;
+        this.pointProducer = actorSystem.actorOf( PointActor.props(pointRepository) );
     }
 
     @Security.Authenticated(Secured.class)
@@ -30,24 +39,32 @@ public class MainController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public Result addPoint(Double x, Double y, Double r) {
+    public CompletionStage<Result> addPoint(Double x, Double y, Double r) {
         if(isValidX(x) && isValidY(y) && isValidR(r)) {
-            paramArea.addPoint(
-                    new UserPoint(userOnline.getLogin( session().get("token") ), x, y, r)
+            pointProducer.tell(
+                    new PointActorProtocol.AddPoint(
+                            new UserPoint(userOnline.getLogin( session().get("token") ), x, y, r)
+                    ),
+                    ActorRef.noSender()
             );
             return getPoints(r);
         } else {
-            return badRequest(
-                    Json.newObject()
-                            .put("error", "Неверные параметры!")
+            return CompletableFuture.completedFuture(
+                    badRequest(
+                            Json.newObject().put("error", "Неверные параметры!")
+                    )
             );
         }
     }
 
     @Security.Authenticated(Secured.class)
-    public Result getPoints(Double r) {
-        return ok(
-                Json.toJson( paramArea.getPoints(userOnline.getLogin( session().get("token") ), r) )
+    public CompletionStage<Result> getPoints(Double r) {
+        return FutureConverters.toJava(
+                ask(pointProducer,
+                        new PointActorProtocol.GetPoints(userOnline.getLogin( session().get("token") ), r),
+                        1000)
+        ).thenApply(
+                response -> ok( Json.toJson(response) )
         );
     }
 

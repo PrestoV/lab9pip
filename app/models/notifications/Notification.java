@@ -22,6 +22,7 @@ public class Notification {
     @Inject
     public Notification(ActorSystem actorSystem) {
         this.actorSystem = actorSystem;
+
         Camel camel = CamelExtension.get(actorSystem);
         CamelContext camelContext = camel.context();
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
@@ -29,6 +30,7 @@ public class Notification {
         camelContext.addComponent("activemq",
                 ActiveMQComponent.activeMQComponent("vm://localhost?broker.persistent=false")
         );
+
         jmsProducer = actorSystem.actorOf(NotificationProducer.props, "jms_producer");
     }
 
