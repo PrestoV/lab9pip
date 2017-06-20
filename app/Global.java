@@ -1,3 +1,4 @@
+import play.Application;
 import play.GlobalSettings;
 import play.libs.F;
 import play.mvc.Http;

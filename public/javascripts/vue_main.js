@@ -232,7 +232,6 @@ var resultTable = new Vue({
     },
     methods: {
         fillTable: function() {
-            this.showTable = true;
             this.$http({url: '/getpoints', method: 'GET', data: {}
             }).then(
                 function (response) {

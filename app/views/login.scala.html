@@ -7,30 +7,33 @@
         <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/style.css")"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="@routes.Assets.versioned("javascripts/bootstrap-notify.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/jms.js")"></script>
     </head>
     <body>
         @header(false, "")
-    <div style="width:30%; padding: 15px;" class="card">
-        <h2 class="text-center">Авторизация</h2>
-        <form id="login_form" style="margin-top: 30px;" v-on:submit.prevent="submitForm">
-            <div class="form-group" v-bind:class="{ 'has-error' : incorrectLogin }">
-                <label for="login" class="control-label">Логин</label>
-                <input v-model.trim="login" v-on:blur="isValidLogin" maxlength="45"
-                class="form-control" name="login" type="text" />
-            </div>
-            <div class="form-group" v-bind:class="{ 'has-error' : incorrectPassword }" style="margin-bottom: 25px;">
-                <label for="password" class="control-label">Пароль</label>
-                <input v-model="password" v-on:blur="isValidPassword" maxlength="45"
-                class="form-control" name="password" type="password" />
-            </div>
-            <div class="alert" v-if="hasWarning || hasError"
-            v-bind:class="{ 'alert-warning' : hasWarning, 'alert-danger' : hasError }"
-            role="alert">{{ message }}</div>
-            <button type="submit" class="mt_button" style="width: 100%; margin-top: 5px;">Войти</button>
-        </form>
-    </div>
-    <script src="https://ru.vuejs.org/js/vue.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.0/vue-resource.min.js"></script>
-    <script src="@routes.Assets.versioned("javascripts/vue_login.js")"></script>
+        <div style="width:30%; padding: 15px;" class="card">
+            <h2 class="text-center">Авторизация</h2>
+            <form id="login_form" style="margin-top: 30px;" v-on:submit.prevent="submitForm">
+                <div class="form-group" v-bind:class="{ 'has-error' : incorrectLogin }">
+                    <label for="login" class="control-label">Логин</label>
+                    <input v-model.trim="login" v-on:blur="isValidLogin" maxlength="45"
+                    class="form-control" name="login" type="text" />
+                </div>
+                <div class="form-group" v-bind:class="{ 'has-error' : incorrectPassword }" style="margin-bottom: 25px;">
+                    <label for="password" class="control-label">Пароль</label>
+                    <input v-model="password" v-on:blur="isValidPassword" maxlength="45"
+                    class="form-control" name="password" type="password" />
+                </div>
+                <div class="alert" v-show="hasWarning || hasError" style="display: none;"
+                v-bind:class="{ 'alert-warning' : hasWarning, 'alert-danger' : hasError }"
+                role="alert">{{ message }}</div>
+                <button type="submit" class="mt_button" style="width: 100%; margin-top: 5px;">Войти</button>
+            </form>
+        </div>
+        <script src="https://ru.vuejs.org/js/vue.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.0/vue-resource.min.js"></script>
+        <script src="@routes.Assets.versioned("javascripts/vue_login.js")"></script>
     </body>
 </html>

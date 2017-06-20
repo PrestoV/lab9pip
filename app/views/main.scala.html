@@ -9,6 +9,9 @@
         <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/style.css")"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="@routes.Assets.versioned("javascripts/bootstrap-notify.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/jms.js")"></script>
     </head>
     <body>
         @header(true, login.toUpperCase)
@@ -87,14 +90,14 @@
                         <button class="mt_button" style="width: 100%; margin: 0px; margin-top: 10px;" v-on:click="check">
                             Проверить
                         </button>
-                        <div class="alert alert-warning" v-if="hasWarning" role="alert" style="margin: 0px; padding: 10px; margin-top: 10px;">
+                        <div class="alert alert-warning" v-show="hasWarning" role="alert" style="display: none; margin: 0px; padding: 10px; margin-top: 10px;">
                             {{ message }}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="result_div" v-if="showTable" class="panel panel-default" style="width: 900px; margin: auto; margin-top: 10px;">
+        <div id="result_div" v-show="showTable" class="panel panel-default" style="display: none; width: 900px; margin: auto; margin-top: 10px;">
             <div class="panel-heading" style="text-align: center;">
                 Результаты проверок
             </div>

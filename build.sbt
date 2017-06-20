@@ -18,3 +18,13 @@ libraryDependencies ++= Seq(
   "org.hibernate" % "hibernate-entitymanager" % "4.3.11.Final"
 )
 PlayKeys.externalizeResources := false
+libraryDependencies ++=  {
+  val akkaV = "2.4.1"
+  val activemqV = "5.14.5"
+  Seq(
+    "com.typesafe.akka" %% "akka-actor"       % akkaV,
+    "com.typesafe.akka" %% "akka-camel"       % akkaV,
+    "io.spray"          %% "spray-json"       % "1.3.1",
+    "org.apache.activemq" % "activemq-camel"  % activemqV
+  )
+}
