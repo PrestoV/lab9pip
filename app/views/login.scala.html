@@ -13,7 +13,7 @@
     </head>
     <body>
         @header(false, "")
-        <div style="width:30%; padding: 15px;" class="card">
+        <div style="width:30%; padding: 15px; min-width: 300px;" class="card">
             <h2 class="text-center">Авторизация</h2>
             <form id="login_form" style="margin-top: 30px;" v-on:submit.prevent="submitForm">
                 <div class="form-group" v-bind:class="{ 'has-error' : incorrectLogin }">
