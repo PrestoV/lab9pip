@@ -1,6 +1,6 @@
 package models.notifications;
 
-import actors.NotificationProducer;
+import actors.NotificationActorProducer;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.camel.Camel;
@@ -28,7 +28,7 @@ public class Notification {
                 ActiveMQComponent.activeMQComponent("vm://localhost?broker.persistent=false")
         );
 
-        jmsProducer = actorSystem.actorOf(NotificationProducer.props, "jms_producer");
+        jmsProducer = actorSystem.actorOf(NotificationActorProducer.props, "jms_producer");
     }
 
     public void signIn(String login) {

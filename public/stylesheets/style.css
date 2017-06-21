@@ -14,6 +14,20 @@ body
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+@media (max-width: 1211px) and (min-width: 864px){
+    .header-area {
+        padding: 25px;
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 864px) {
+    .header-area {
+        padding: 35px;
+        margin-bottom: 10px;
+    }
+}
+
 fieldset
 {
     padding: 15px 40px 15px 20px;
@@ -176,6 +190,68 @@ div.card {
     padding: 20px;
 }
 
+div.card_plot {
+    width: 70%;
+    min-width: 880px;
+    margin: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: 0.3s;
+    padding: 20px;
+}
+
+@media (max-width: 1211px) and (min-width: 864px){
+    div.card_plot {
+        width: 85%;
+        min-width: 440px;
+    }
+}
+
+@media (max-width: 864px) {
+    div.card_plot {
+        width: 100%;
+        min-width: 880px;
+    }
+}
+
+#result_div {
+    width: 70%;
+}
+
+@media (max-width: 1211px) and (min-width: 864px){
+    #result_div {
+        width: 85%;
+    }
+}
+
+@media (max-width: 864px) {
+    #result_div {
+        width: 100%;
+    }
+}
+
+div.card_log {
+    width: 30%;
+    margin: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: 0.3s;
+    padding: 15px;
+    min-width: 300px;
+}
+
+@media (max-width: 1211px) and (min-width: 864px){
+    div.card_log {
+        width: 60%;
+    }
+}
+
+@media (max-width: 864px) {
+    div.card_log {
+        width: 90%;
+    }
+}
+
 div.card_body {
     background-color: #4CAF50;
     color: white;
@@ -203,6 +279,20 @@ div.card_header {
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     overflow: hidden;
+}
+
+@media (max-width: 1211px) and (min-width: 864px){
+    .mt_button {
+        background-color: orange;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 864px) {
+    .mt_button {
+        background-color: tomato;
+        font-size: 24px;
+    }
 }
 
 .mt_button:hover {
@@ -275,4 +365,38 @@ a:link, a:visited {
 }
 .btn-group .button:hover {
     background-color: #283593;
+}
+
+.log {
+    float: right;
+    margin-top: -30px;
+}
+
+@media (max-width: 1211px) and (min-width: 864px){
+    .log {
+        margin-top: -20px;
+    }
+}
+
+@media (max-width: 864px) {
+    .log {
+        margin-top: -10px;
+    }
+}
+
+.form_div {
+    float: right;
+}
+
+@media (max-width: 1211px) and (min-width: 864px){
+    .form_div {
+        float: none;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 864px) {
+    .form_div {
+        float: left;
+    }
 }

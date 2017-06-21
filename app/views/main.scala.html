@@ -15,12 +15,13 @@
     </head>
     <body>
         @header(true, login.toUpperCase)
-        <div class="card" style="width: 900px;">
+        <div class="card_plot">
             <canvas id="plot" onclick="coordPlot.plotClick(event)" height="440px" width="440px"
             style="margin-top: 20px; margin-bottom: 20px;">
             </canvas>
-            <div style="float: right;">
-                <div id="r_div" class="form-group panel panel-default" v-bind:class="{ 'has-error' : incorrectR }">
+            <div class="form_div">
+                <div id="r_div" class="form-group panel panel-default" v-bind:class="{ 'has-error' : incorrectR }"
+                style="width: 335px;">
                     <div class="panel-heading">
                         <label class="control-label" style="margin: 0px;">Параметр R</label>
                     </div>
@@ -45,7 +46,7 @@
                     </div>
                 </div>
                 <div id="point_div" class="form-group panel panel-default"
-                v-bind:class="{ 'has-error' : incorrectCoords }">
+                v-bind:class="{ 'has-error' : incorrectCoords }" style="width: 335px;">
                     <div class="panel-heading">
                         <label class="control-label" style="margin: 0px;">Проверка точки</label>
                     </div>
@@ -55,7 +56,7 @@
                                 <div class="navbar-header" style="float: left;">
                                     <label class="navbar-brand">X</label>
                                 </div>
-                                <div class="collapse navbar-collapse" style="float: right;">
+                                <div class="navbar-collapse" style="float: right;">
                                     <div style="margin: 5px;">
                                         <div class="btn-group" role="group">
                                             <button type="button" v-on:click="selectX" class="btn btn-default">-2</button>
@@ -81,7 +82,7 @@
                                 <div class="navbar-header" style="float: left;">
                                     <label class="navbar-brand">Y</label>
                                 </div>
-                                <div class="collapse navbar-collapse" style="float: right; margin-top: 14px;">
+                                <div class="navbar-collapse" style="float: right; margin-top: 14px;">
                                     <input v-model.trim="yValue" v-on:blur="isValidY" type="text"
                                     maxlength="20" placeholder="-3 ... 3"/>
                                 </div>
@@ -97,7 +98,8 @@
                 </div>
             </div>
         </div>
-        <div id="result_div" v-show="showTable" class="panel panel-default" style="display: none; width: 900px; margin: auto; margin-top: 10px;">
+        <div id="result_div" v-show="showTable" class="panel panel-default"
+        style="display: none; margin: auto; margin-top: 10px;">
             <div class="panel-heading" style="text-align: center;">
                 Результаты проверок
             </div>
