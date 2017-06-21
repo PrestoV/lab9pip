@@ -5,12 +5,11 @@ import models.area.Point;
 import models.area.PointRepository;
 import models.area.UserPoint;
 
-import javax.inject.Inject;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import static models.area.ParamArea.checkPoint;
+
 
 public class PointActor extends UntypedActor {
     private final PointRepository pointRepository;

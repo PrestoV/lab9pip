@@ -6,7 +6,7 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import models.area.PointRepository;
 import models.area.UserPoint;
-import models.users.UserOnline;
+import models.users.UsersOnline;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -22,11 +22,11 @@ import static akka.pattern.Patterns.ask;
 
 
 public class MainController extends Controller {
-    private final UserOnline userOnline;
+    private final UsersOnline userOnline;
     private final ActorRef pointProducer;
 
     @Inject
-    public MainController(UserOnline userOnline, ActorSystem actorSystem, PointRepository pointRepository) {
+    public MainController(UsersOnline userOnline, ActorSystem actorSystem, PointRepository pointRepository) {
         this.userOnline = userOnline;
         this.pointProducer = actorSystem.actorOf( PointActor.props(pointRepository) );
     }
@@ -64,7 +64,7 @@ public class MainController extends Controller {
                         new PointActorProtocol.GetPoints(userOnline.getLogin( session().get("token") ), r),
                         1000)
         ).thenApply(
-                response -> ok( Json.toJson(response) )
+                points -> ok( Json.toJson(points) )
         );
     }
 

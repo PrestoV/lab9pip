@@ -1,6 +1,5 @@
 package models.db;
 
-
 import models.shared.Encryption;
 import models.users.User;
 import models.users.UserRepository;

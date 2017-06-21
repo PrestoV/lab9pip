@@ -1,6 +1,5 @@
 package models.notifications;
 
-
 import actors.NotificationProducer;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
@@ -14,15 +13,13 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.jms.ConnectionFactory;
 
+
 @Singleton
 public class Notification {
-    private final ActorSystem actorSystem;
     private final ActorRef jmsProducer;
 
     @Inject
     public Notification(ActorSystem actorSystem) {
-        this.actorSystem = actorSystem;
-
         Camel camel = CamelExtension.get(actorSystem);
         CamelContext camelContext = camel.context();
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");

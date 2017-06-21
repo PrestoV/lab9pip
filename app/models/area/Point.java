@@ -23,12 +23,12 @@ public class Point implements Serializable{
         this.r = r;
     }
 
+    public Point() {
+    }
+
     private Point(Double x, Double y, Double r, Boolean inarea) {
         this(x, y, r);
         this.inarea = inarea;
-    }
-
-    public Point() {
     }
 
     public Double getX() {

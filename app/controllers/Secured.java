@@ -1,6 +1,6 @@
 package controllers;
 
-import models.users.UserOnline;
+import models.users.UsersOnline;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -10,10 +10,10 @@ import javax.inject.Inject;
 
 
 public class Secured extends Security.Authenticator {
-    private final UserOnline userOnline;
+    private final UsersOnline userOnline;
 
     @Inject
-    public Secured(UserOnline userOnline) {
+    public Secured(UsersOnline userOnline) {
         this.userOnline = userOnline;
     }
 

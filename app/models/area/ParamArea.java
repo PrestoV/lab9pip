@@ -1,36 +1,41 @@
 package models.area;
 
-import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class ParamArea {
     public static boolean checkPoint(double x, double y, double r) {
         if(x > 0) {
-            if(y > 0)
+            if(y > 0) {
                 return checkFirstRegion(x, y, r);
-            else if(y < 0)
+            }
+            else if(y < 0) {
                 return checkFourthRegion(x, y, r);
-            else
+            }
+            else {
                 return checkFirstRegion(x, y, r) || checkFourthRegion(x, y, r);
+            }
         }
         else if (x < 0) {
-            if(y > 0)
+            if(y > 0) {
                 return checkSecondRegion(x, y, r);
-            else if(y < 0)
+            }
+            else if(y < 0) {
                 return checkThirdRegion(x, y, r);
-            else
+            }
+            else {
                 return checkSecondRegion(x, y, r) || checkThirdRegion(x, y, r);
+            }
         }
         else {
-            if(y > 0)
+            if(y > 0) {
                 return checkFirstRegion(x, y, r) || checkSecondRegion(x, y, r);
-            else if(y < 0)
+            }
+            else if(y < 0) {
                 return checkThirdRegion(x, y, r) || checkFourthRegion(x, y, r);
-            else
+            }
+            else {
                 return checkFirstRegion(x, y, r) || checkSecondRegion(x, y, r)
                         || checkThirdRegion(x, y, r) || checkFourthRegion(x, y, r);
+            }
         }
     }
 

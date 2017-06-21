@@ -6,12 +6,12 @@ import javax.persistence.*;
 public class UserPoint extends Point {
     private String owner;
 
+    public UserPoint() {
+    }
+
     public UserPoint(String owner, Double x, Double y, Double r) {
         super(x, y, r);
         this.owner = owner;
-    }
-
-    public UserPoint() {
     }
 
     public String getOwner() {
