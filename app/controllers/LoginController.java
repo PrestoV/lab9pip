@@ -34,18 +34,6 @@ public class LoginController extends Controller {
         this.authProducer = actorSystem.actorOf( AuthActor.props(userRepository, usersOnline, notification) );
         this.usersOnline = usersOnline;
         this.executionContext = executionContext;
-
-        /*
-         * TODO: FOR TEST, REMOVE IT
-         */
-        if( !userRepository.isValid("presto", "555") ) {
-            userRepository.add(
-                    new models.users.User(
-                            "presto",
-                            "555"
-                    )
-            );
-        }
     }
 
     public Result index() {
@@ -65,6 +53,8 @@ public class LoginController extends Controller {
                 return authorize();
             case "unauthorize":
                 return unauthorize();
+            case "reg":
+                return reg();
             default:
                 return CompletableFuture.completedFuture(
                         badRequest(
@@ -107,6 +97,29 @@ public class LoginController extends Controller {
         session().clear();
         return CompletableFuture.completedFuture(
                 ok( login.render() )
+        );
+    }
+
+    private CompletionStage<Result> reg() {
+        JsonNode req = request().body().asJson();
+        String login = req.get("login").asText();
+        String password = req.get("password").asText();
+
+        return FutureConverters.toJava(
+                ask(authProducer,
+                        new AuthActorProtocol.SignUp(login, password),
+                        1000)
+        ).thenApplyAsync(
+                success -> {
+                    if((Boolean) success) {
+                        return ok();
+                    } else {
+                        return badRequest(
+                                Json.newObject()
+                                        .put("error", "Такой пользователь уже зарегистрирован!")
+                        );
+                    }
+                }, executionContext.current()
         );
     }
 }

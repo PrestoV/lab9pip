@@ -4,6 +4,7 @@ import akka.actor.Props;
 import akka.actor.UntypedActor;
 import models.notifications.Notification;
 import models.shared.Encryption;
+import models.users.User;
 import models.users.UsersOnline;
 import models.users.UserRepository;
 
@@ -30,6 +31,8 @@ public class AuthActor extends UntypedActor {
             receiveSignIn((AuthActorProtocol.SignIn) msg);
         } else if(msg instanceof AuthActorProtocol.SignOut) {
             receiveSignOut((AuthActorProtocol.SignOut) msg);
+        } else if(msg instanceof AuthActorProtocol.SignUp) {
+            receiveSignUp((AuthActorProtocol.SignUp) msg);
         } else {
             unhandled(msg);
         }
@@ -57,5 +60,16 @@ public class AuthActor extends UntypedActor {
             notification.signOut( usersOnline.getLogin(token) );
             usersOnline.remove(token);
         }
+    }
+
+    private void receiveSignUp(AuthActorProtocol.SignUp msg) {
+        String login = msg.login;
+        String password = msg.password;
+
+        login = login.toLowerCase();
+        sender().tell(
+                userRepository.add(new User(login, password)),
+                self()
+        );
     }
 }

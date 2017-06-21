@@ -6,6 +6,7 @@ import models.users.UserRepository;
 import play.db.jpa.JPAApi;
 
 import javax.inject.Inject;
+import javax.jws.soap.SOAPBinding;
 import javax.persistence.EntityManager;
 import java.util.function.Function;
 
@@ -19,15 +20,21 @@ public class JPAUserRepository implements UserRepository {
     }
 
     @Override
-    public void add(User user) {
+    public Boolean add(User user) {
         user.setPassword(
                 Encryption.encryptString( user.getPassword() )
         );
+
+        if( wrap(em -> isExist(em, user.getLogin())) ) {
+            return false;
+        }
+
         wrap(em -> insert(em, user));
+        return true;
     }
 
     @Override
-    public boolean isValid(String login, String password) {
+    public Boolean isValid(String login, String password) {
         return wrap(em -> isValid(em, login, Encryption.encryptString(password)));
     }
 
@@ -45,6 +52,13 @@ public class JPAUserRepository implements UserRepository {
                 "SELECT u FROM User u WHERE u.login=:login AND u.password=:password")
                 .setParameter("login", login)
                 .setParameter("password", password)
+                .getResultList().isEmpty();
+    }
+
+    private boolean isExist(EntityManager em, String login) {
+        return !em.createQuery(
+                "SELECT u FROM User u WHERE u.login=:login")
+                .setParameter("login", login)
                 .getResultList().isEmpty();
     }
 }

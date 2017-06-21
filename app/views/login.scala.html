@@ -30,6 +30,9 @@
                 v-bind:class="{ 'alert-warning' : hasWarning, 'alert-danger' : hasError }"
                 role="alert">{{ message }}</div>
                 <button type="submit" class="mt_button" style="width: 100%; margin-top: 5px;">Войти</button>
+                <div style="text-align: right; margin: 5px;">
+                    <a v-on:click="reg" style="cursor: pointer;">Зарегистрироваться</a>
+                </div>
             </form>
         </div>
         <script src="https://ru.vuejs.org/js/vue.js"></script>

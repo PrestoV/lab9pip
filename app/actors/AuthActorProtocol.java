@@ -19,4 +19,14 @@ public class AuthActorProtocol {
             this.token = token;
         }
     }
+
+    public static class SignUp {
+        public final String login;
+        public final String password;
+
+        public SignUp(String login, String password) {
+            this.login = login;
+            this.password = password;
+        }
+    }
 }
