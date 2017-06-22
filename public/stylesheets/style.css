@@ -5,6 +5,7 @@ body
 
 .header-area
 {
+    width: 100%;
     background: #3F51B5;
     color: #ffffff;
     font-family: 'Roboto', sans-serif;
@@ -17,14 +18,24 @@ body
 @media (max-width: 1211px) and (min-width: 864px){
     .header-area {
         padding: 25px;
+        padding-left: 0px;
+        padding-right: 0px;
         margin-bottom: 30px;
+    }
+    h1 {
+        font-size: 1.9em;
     }
 }
 
 @media (max-width: 864px) {
     .header-area {
         padding: 35px;
+        padding-left: 0px;
+        padding-right: 0px;
         margin-bottom: 10px;
+    }
+    h1 {
+        font-size: 1.7em;
     }
 }
 
@@ -192,7 +203,7 @@ div.card {
 
 div.card_plot {
     width: 70%;
-    min-width: 880px;
+    min-width: 440px;
     margin: auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     text-align: center;
@@ -203,14 +214,12 @@ div.card_plot {
 @media (max-width: 1211px) and (min-width: 864px){
     div.card_plot {
         width: 85%;
-        min-width: 440px;
     }
 }
 
 @media (max-width: 864px) {
     div.card_plot {
-        width: 100%;
-        min-width: 880px;
+        width: 95%;
     }
 }
 
@@ -226,7 +235,7 @@ div.card_plot {
 
 @media (max-width: 864px) {
     #result_div {
-        width: 100%;
+        width: 95%;
     }
 }
 
@@ -354,6 +363,7 @@ a:link, a:visited {
     color: white;
     text-align: center;
     padding: 10px;
+    margin-right: 0px;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
@@ -386,17 +396,18 @@ a:link, a:visited {
 
 .form_div {
     float: right;
+    margin: auto;
+    width: 335px;
 }
 
 @media (max-width: 1211px) and (min-width: 864px){
     .form_div {
         float: none;
-        margin: 0 auto;
     }
 }
 
 @media (max-width: 864px) {
     .form_div {
-        float: left;
+        float: none;
     }
 }
